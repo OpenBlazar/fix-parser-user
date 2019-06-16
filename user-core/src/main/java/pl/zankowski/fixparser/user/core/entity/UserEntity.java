@@ -102,6 +102,11 @@ public class UserEntity extends AbstractBaseEntity {
         return new Builder();
     }
 
+    public static Builder builder(final UserEntity userEntity) {
+        Objects.requireNonNull(userEntity);
+        return new Builder(userEntity);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -152,6 +157,20 @@ public class UserEntity extends AbstractBaseEntity {
         private boolean activated;
         private String resetKey;
         private Instant resetDate;
+
+        public Builder() {
+        }
+
+        public Builder(final UserEntity entity) {
+            this.id = entity.getId();
+            this.username = entity.getUsername();
+            this.email = entity.getEmail();
+            this.password = entity.getPassword();
+            this.activationKey = entity.getActivationKey();
+            this.activated = entity.isActivated();
+            this.resetKey = entity.getResetKey();
+            this.resetDate = entity.getResetDate();
+        }
 
         public Builder id(final Long id) {
             this.id = id;
