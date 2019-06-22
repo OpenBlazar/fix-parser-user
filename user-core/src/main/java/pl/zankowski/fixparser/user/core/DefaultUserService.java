@@ -2,7 +2,9 @@ package pl.zankowski.fixparser.user.core;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 import pl.zankowski.fixparser.common.RandomUtil;
+import pl.zankowski.fixparser.mail.MailService;
 import pl.zankowski.fixparser.user.api.PasswordResetRequestTO;
 import pl.zankowski.fixparser.user.api.PasswordResetTO;
 import pl.zankowski.fixparser.user.api.UserActivationTO;
@@ -15,18 +17,21 @@ import pl.zankowski.fixparser.user.core.entity.UserEntity;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+@Service
 public class DefaultUserService implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final MailService mailService;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     public DefaultUserService(final UserRepository userRepository, final UserMapper userMapper,
-            final PasswordEncoder passwordEncoder) {
+            final PasswordEncoder passwordEncoder, final MailService mailService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.mailService = mailService;
     }
 
     @Override
@@ -42,7 +47,7 @@ public class DefaultUserService implements UserService {
 
     private UserDetailsTO registerSupplier(final UserRegistrationTO registration) {
         final UserEntity savedUser = userRepository.save(userMapper.map(registration));
-        // TODO Send activation email
+        mailService.sendActivationEmail(userMapper.mapMail(savedUser));
         return userMapper.map(savedUser);
     }
 
@@ -65,7 +70,7 @@ public class DefaultUserService implements UserService {
                 .map(this::initPasswordReset)
                 .orElseThrow(UserNotFoundException::new);
 
-        // TODO send email with password reset
+        mailService.sendResetPasswordEmail(userMapper.mapMail(user));
     }
 
     private UserEntity initPasswordReset(final UserEntity user) {

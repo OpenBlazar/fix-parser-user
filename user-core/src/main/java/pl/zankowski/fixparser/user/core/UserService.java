@@ -1,5 +1,6 @@
 package pl.zankowski.fixparser.user.core;
 
+import org.springframework.stereotype.Service;
 import pl.zankowski.fixparser.user.api.PasswordResetRequestTO;
 import pl.zankowski.fixparser.user.api.PasswordResetTO;
 import pl.zankowski.fixparser.user.api.UserActivationTO;

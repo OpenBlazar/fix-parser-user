@@ -30,15 +30,15 @@ public class UserEntity extends AbstractBaseEntity {
     @Column(length = 60)
     private String password;
 
-    @Size(max = 20)
-    @Column(name = "activation_key", length = 20)
+    @Size(max = 36)
+    @Column(name = "activation_key", length = 36)
     private String activationKey;
 
     @Column
     private boolean activated;
 
-    @Size(max = 20)
-    @Column(name = "reset_key", length = 20)
+    @Size(max = 36)
+    @Column(name = "reset_key", length = 36)
     private String resetKey;
 
     @Column(name = "reset_date")

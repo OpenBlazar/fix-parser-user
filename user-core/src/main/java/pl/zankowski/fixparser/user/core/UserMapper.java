@@ -5,6 +5,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import pl.zankowski.fixparser.common.RandomUtil;
 import pl.zankowski.fixparser.core.api.ImmutableId;
+import pl.zankowski.fixparser.mail.api.ImmutableUserMailTO;
+import pl.zankowski.fixparser.mail.api.UserMailTO;
 import pl.zankowski.fixparser.user.api.ImmutableUserDetailsTO;
 import pl.zankowski.fixparser.user.api.UserDetailsTO;
 import pl.zankowski.fixparser.user.api.UserRegistrationTO;
@@ -37,6 +39,15 @@ class UserMapper {
                         .build())
                 .username(userEntity.getUsername())
                 .email(userEntity.getEmail())
+                .build();
+    }
+
+    UserMailTO mapMail(final UserEntity user) {
+        return ImmutableUserMailTO.builder()
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .activationKey(user.getActivationKey())
+                .resetKey(user.getResetKey())
                 .build();
     }
 
