@@ -19,6 +19,11 @@
 
         <dependency>
             <groupId>pl.zankowski.fixparser</groupId>
+            <artifactId>user-spi</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>pl.zankowski.fixparser</groupId>
             <artifactId>core-entity</artifactId>
         </dependency>
 

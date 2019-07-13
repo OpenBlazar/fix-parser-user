@@ -1,5 +1,6 @@
 package pl.zankowski.fixparser.user.core;
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -7,6 +8,8 @@ import pl.zankowski.fixparser.common.RandomUtil;
 import pl.zankowski.fixparser.core.api.ImmutableId;
 import pl.zankowski.fixparser.mail.api.ImmutableUserMailTO;
 import pl.zankowski.fixparser.mail.api.UserMailTO;
+import pl.zankowski.fixparser.user.api.AccountTO;
+import pl.zankowski.fixparser.user.api.ImmutableAccountTO;
 import pl.zankowski.fixparser.user.api.ImmutableUserDetailsTO;
 import pl.zankowski.fixparser.user.api.UserDetailsTO;
 import pl.zankowski.fixparser.user.api.UserRegistrationTO;
@@ -48,6 +51,14 @@ class UserMapper {
                 .email(user.getEmail())
                 .activationKey(user.getActivationKey())
                 .resetKey(user.getResetKey())
+                .build();
+    }
+
+    AccountTO mapAccount(final UserEntity userEntity) {
+        return ImmutableAccountTO.builder()
+                .email(userEntity.getEmail())
+                .password(userEntity.getPassword())
+                .roles(Lists.newArrayList())
                 .build();
     }
 

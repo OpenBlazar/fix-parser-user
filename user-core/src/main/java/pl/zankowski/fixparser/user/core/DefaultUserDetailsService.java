@@ -3,8 +3,10 @@ package pl.zankowski.fixparser.user.core;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.zankowski.fixparser.common.RandomUtil;
 import pl.zankowski.fixparser.mail.MailService;
+import pl.zankowski.fixparser.user.api.AccountTO;
 import pl.zankowski.fixparser.user.api.PasswordResetRequestTO;
 import pl.zankowski.fixparser.user.api.PasswordResetTO;
 import pl.zankowski.fixparser.user.api.UserActivationTO;
@@ -18,7 +20,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 @Service
-public class DefaultUserService implements UserService {
+@Transactional
+public class DefaultUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
@@ -26,7 +29,7 @@ public class DefaultUserService implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DefaultUserService(final UserRepository userRepository, final UserMapper userMapper,
+    public DefaultUserDetailsService(final UserRepository userRepository, final UserMapper userMapper,
             final PasswordEncoder passwordEncoder, final MailService mailService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
@@ -98,6 +101,13 @@ public class DefaultUserService implements UserService {
                 .resetKey(null)
                 .resetDate(null)
                 .build());
+    }
+
+    @Override
+    public AccountTO findAccountByEmail(final String email) throws UserNotFoundException {
+        return userRepository.findOneByEmail(email)
+                .map(userMapper::mapAccount)
+                .orElseThrow(UserNotFoundException::new);
     }
 
 }
