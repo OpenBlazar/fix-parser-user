@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @JsonSerialize(as = ImmutablePasswordResetRequestTO.class)
-@JsonDeserialize(as = ImmutablePasswordResetRequestTO.class)
+@JsonDeserialize(builder = ImmutablePasswordResetRequestTO.Builder.class)
 public interface PasswordResetRequestTO {
 
     String getEmail();

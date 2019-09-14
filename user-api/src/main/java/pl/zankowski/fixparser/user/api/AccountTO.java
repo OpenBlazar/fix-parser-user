@@ -8,7 +8,7 @@ import java.util.List;
 
 @Value.Immutable
 @JsonSerialize(as = ImmutableAccountTO.class)
-@JsonDeserialize(as = ImmutableAccountTO.class)
+@JsonDeserialize(builder = ImmutableAccountTO.Builder.class)
 public interface AccountTO {
 
     String getEmail();

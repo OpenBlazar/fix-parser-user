@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @JsonSerialize(as = ImmutableUserActivationTO.class)
-@JsonDeserialize(as = ImmutableUserActivationTO.class)
+@JsonDeserialize(builder = ImmutableUserActivationTO.Builder.class)
 public interface UserActivationTO {
 
     String getActivationKey();

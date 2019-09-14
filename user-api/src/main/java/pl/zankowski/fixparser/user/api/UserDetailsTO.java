@@ -7,7 +7,7 @@ import pl.zankowski.fixparser.core.api.ImmutableId;
 
 @Value.Immutable
 @JsonSerialize(as = ImmutableUserDetailsTO.class)
-@JsonDeserialize(as = ImmutableUserDetailsTO.class)
+@JsonDeserialize(builder = ImmutableUserDetailsTO.Builder.class)
 public interface UserDetailsTO {
 
     ImmutableId getId();

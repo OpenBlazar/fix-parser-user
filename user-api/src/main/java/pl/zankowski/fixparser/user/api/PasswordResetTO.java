@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @JsonSerialize(as = ImmutablePasswordResetTO.class)
-@JsonDeserialize(as = ImmutablePasswordResetTO.class)
+@JsonDeserialize(builder = ImmutablePasswordResetTO.Builder.class)
 public interface PasswordResetTO {
 
     String getKey();

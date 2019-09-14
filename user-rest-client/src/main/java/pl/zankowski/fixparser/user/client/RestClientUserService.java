@@ -1,6 +1,5 @@
 package pl.zankowski.fixparser.user.client;
 
-import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +20,8 @@ public class RestClientUserService implements UserService {
 
     @Override
     public AccountTO findAccountByEmail(final String email) {
-        final ResponseEntity<AccountTO> response = restTemplate.getForEntity("http://user-service/mail/activation",
-                AccountTO.class, ImmutableMap.builder()
-                        .put("email", email)
-                        .build());
+        final ResponseEntity<AccountTO> response = restTemplate.getForEntity("http://user-service/?email={email}",
+                AccountTO.class, email);
 
         return HttpStatus.OK == response.getStatusCode()
                 ? response.getBody()

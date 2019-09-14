@@ -6,7 +6,7 @@ import org.immutables.value.Value;
 
 @Value.Immutable
 @JsonSerialize(as = ImmutableUserRegistrationTO.class)
-@JsonDeserialize(as = ImmutableUserRegistrationTO.class)
+@JsonDeserialize(builder = ImmutableUserRegistrationTO.Builder.class)
 public interface UserRegistrationTO {
 
     String getUsername();
