@@ -32,12 +32,9 @@ public class UserRestController {
 
     @GetMapping
     public ResponseEntity<AccountTO> findUserByEmail(@RequestParam final String email) {
-        try {
-            final AccountTO account = userDetailsService.findAccountByEmail(email);
-            return ResponseEntity.ok(account);
-        } catch (final UserNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+        return userDetailsService.findAccountByEmail(email)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }
 
     @PostMapping("/register")

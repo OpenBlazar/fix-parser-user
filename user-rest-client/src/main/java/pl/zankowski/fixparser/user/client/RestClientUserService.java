@@ -8,6 +8,8 @@ import org.springframework.web.client.RestTemplate;
 import pl.zankowski.fixparser.user.api.AccountTO;
 import pl.zankowski.fixparser.user.spi.UserService;
 
+import java.util.Optional;
+
 @Service
 public class RestClientUserService implements UserService {
 
@@ -19,13 +21,13 @@ public class RestClientUserService implements UserService {
     }
 
     @Override
-    public AccountTO findAccountByEmail(final String email) {
+    public Optional<AccountTO> findAccountByEmail(final String email) {
         final ResponseEntity<AccountTO> response = restTemplate.getForEntity("http://user-service/?email={email}",
                 AccountTO.class, email);
 
         return HttpStatus.OK == response.getStatusCode()
-                ? response.getBody()
-                : null;
+                ? Optional.ofNullable(response.getBody())
+                : Optional.empty();
     }
 
 }

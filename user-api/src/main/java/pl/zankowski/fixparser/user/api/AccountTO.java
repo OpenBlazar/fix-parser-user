@@ -11,6 +11,8 @@ import java.util.List;
 @JsonDeserialize(builder = ImmutableAccountTO.Builder.class)
 public interface AccountTO {
 
+    Long getId();
+
     String getEmail();
 
     String getPassword();

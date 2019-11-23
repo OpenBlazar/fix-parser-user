@@ -18,6 +18,7 @@ import pl.zankowski.fixparser.user.core.entity.UserEntity;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -104,10 +105,9 @@ public class DefaultUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public AccountTO findAccountByEmail(final String email) throws UserNotFoundException {
+    public Optional<AccountTO> findAccountByEmail(final String email) {
         return userRepository.findOneByEmail(email)
-                .map(userMapper::mapAccount)
-                .orElseThrow(UserNotFoundException::new);
+                .map(userMapper::mapAccount);
     }
 
 }

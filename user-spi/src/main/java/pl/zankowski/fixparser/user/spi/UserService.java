@@ -1,10 +1,11 @@
 package pl.zankowski.fixparser.user.spi;
 
 import pl.zankowski.fixparser.user.api.AccountTO;
-import pl.zankowski.fixparser.user.api.UserNotFoundException;
+
+import java.util.Optional;
 
 public interface UserService {
 
-    AccountTO findAccountByEmail(String email) throws UserNotFoundException;
+    Optional<AccountTO> findAccountByEmail(String email);
 
 }

@@ -56,6 +56,7 @@ class UserMapper {
 
     AccountTO mapAccount(final UserEntity userEntity) {
         return ImmutableAccountTO.builder()
+                .id(userEntity.getId())
                 .email(userEntity.getEmail())
                 .password(userEntity.getPassword())
                 .roles(Lists.newArrayList())
